@@ -1,0 +1,28 @@
+# CODEOWNERS - Define quién debe revisar y aprobar cambios
+# Los usuarios listados aquí serán automáticamente solicitados como revisores
+# cuando se cree un Pull Request que modifique archivos que coincidan con los patrones
+
+# Administradores del repositorio
+# @jdetri - Administrador principal
+# @kgonzalez06 - Administrador
+
+# Por defecto, todos los archivos requieren aprobación de los administradores
+* @jdetri @kgonzalez06
+
+# Documentación de IBMi - Requiere revisión de administradores
+/Documentacion_IBMi/ @jdetri @kgonzalez06
+/Documentacion_IBMi/**/* @jdetri @kgonzalez06
+
+# Documentación de Sistemas Abiertos - Requiere revisión de administradores
+/Documentacion_SistemasAbiertos/ @jdetri @kgonzalez06
+/Documentacion_SistemasAbiertos/**/* @jdetri @kgonzalez06
+
+# Reglas del proyecto - Requiere revisión de administradores
+/Reglas/ @jdetri @kgonzalez06
+/Reglas/**/* @jdetri @kgonzalez06
+
+# Archivos de configuración del repositorio
+/.github/ @jdetri @kgonzalez06
+/.gitignore @jdetri @kgonzalez06
+/README.md @jdetri @kgonzalez06
+/LICENSE @jdetri @kgonzalez06
