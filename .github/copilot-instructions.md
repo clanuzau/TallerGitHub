@@ -38,8 +38,8 @@ For every source SQL (TXT) created must include:
 
 ## SQLRPGLE and RPGLE source creation
 For all sources SQLRPGLE or RPGLE, must include in the two first lines:
-**free
-ctl-opt DFTACTGRP(*NO) ACTGRP('NOVA') OPTION(*SRCSTMT : *NODEBUGIO) BNDDIR('NOVABND');
+- **free
+- ctl-opt DFTACTGRP(*NO) ACTGRP('NOVA') OPTION(*SRCSTMT : *NODEBUGIO) BNDDIR('NOVABND');
 
 
 
