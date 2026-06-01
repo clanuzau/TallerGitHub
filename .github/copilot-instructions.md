@@ -37,8 +37,9 @@ For every source SQL (TXT) created must include:
 - When Field Type is a PACKED, must be NUMERIC type in SQL
 
 ## SQLRPGLE and RPGLE source creation
-For all sources SQLRPGLE or RPGLE, must include in CTL-OPT:
-- CTL-OPT DFTACTGRP(*NO) ACTGRP('NOVA') OPTION(*SRCSTMT : *NODEBUGIO) BNDDIR('NOVABND');
+For all sources SQLRPGLE or RPGLE, must include in the two first lines:
+**free
+ctl-opt DFTACTGRP(*NO) ACTGRP('NOVA') OPTION(*SRCSTMT : *NODEBUGIO) BNDDIR('NOVABND');
 
 
 
