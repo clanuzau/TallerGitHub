@@ -3,6 +3,10 @@
 ## Project Overview
 This is a begining project to start using all AI features to develop an aplication for IBM i using RPGLE, SQLRPGLE, CLLE programs and all objects related on OS/400.
 
+The main goal is to generate a .json object (file) that will placed on IBM i IFS.
+
+
+
 ## Tech Stack
 - **Main Programming Languague:** RPGLE free format
 - **Additional Programming Languagues:** SQLRPGLE, CLLE
