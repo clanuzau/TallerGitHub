@@ -16,6 +16,8 @@ The main goal is to generate a .json object (file) that will placed on IBM i IFS
 - **Object Attributes:** RPGLE, SQLRPGLE, DSPF, PRTF, PF, LF, SQL, TXT, PF-SRC
 
 ## Setup and Installation
+All sources created, must be located on:
+- PUB400: Source : LANUZACX2/NOVASORC with their respective type and the end of the name, eg. MYSOURCE.SQLRPGLE, MYSQL.SQL
 
 ## Project Structure
 **Library** LANUZACX2 - PUB400
