@@ -1,4 +1,4 @@
-# TallerGitHub
+# TallerGitHub - Cesar Lanuza
 
 Repositorio del taller para construir una solución de conciliación contable con dos frentes:
 - IBM i (origen y generación de JSON de conciliación).
