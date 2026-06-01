@@ -27,4 +27,12 @@ The main goal is to generate a .json object (file) that will placed on IBM i IFS
 - **Project:** GitHub Workshop for IBM i
 - **Date:** Set to current date
 - **Program Name:** Place the current program/source name.
-- 
+
+## SQL Source Creation (RUNSQLSTM)
+For every source SQL (TXT) created must include:
+- NOT NULL WITH DEFAULT,
+- LABEL COLUNM for every field definition
+- LABEL COLUMN TEXT for every field definition
+- When Field Type is a ZONED, must be DECIMAL type in SQL
+- When Field Type is a PACKED, must be NUMERIC type in SQL
+
