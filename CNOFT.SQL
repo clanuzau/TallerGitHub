@@ -1,12 +1,8 @@
 -- =====================================================================
 -- Author:          Cesar Lanuza
 -- Project:         GitHub Workshop for IBM i
--- Date:            2026-06-01
+-- Date:            2026-06-02
 -- Program Name:    CNOFT
--- Description:     Archivo Maestro de Tablas de Datos Comunes
---                  Common Data Tables Master File
--- =====================================================================
--- SQL Table Creation for IBM i V7R5M0
 -- =====================================================================
 
 CREATE TABLE CNOFT (
@@ -26,7 +22,8 @@ CREATE TABLE CNOFT (
     created_at TIMESTAMP NOT NULL WITH DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL WITH DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (codigo_tabla, idioma)
-) RCDFMT RCNOFT;
+)
+RCDFMT RCNOFT;
 
 -- Table Label
 LABEL ON TABLE CNOFT IS 'Archivo Maestro de Tablas de Datos Comunes';
@@ -48,7 +45,7 @@ LABEL ON COLUMN CNOFT.estado_registro IS 'Estado Registro';
 LABEL ON COLUMN CNOFT.created_at IS 'Fecha Creación';
 LABEL ON COLUMN CNOFT.updated_at IS 'Fecha Actualización';
 
--- Column Text Labels (Descriptions)
+-- Column Text Labels
 LABEL ON COLUMN CNOFT.codigo_tabla TEXT IS 'Identificador único de la tabla de datos comunes';
 LABEL ON COLUMN CNOFT.idioma TEXT IS 'Código del idioma para la tabla (ES, EN, etc)';
 LABEL ON COLUMN CNOFT.descripcion TEXT IS 'Descripción detallada de la tabla';
@@ -66,8 +63,8 @@ LABEL ON COLUMN CNOFT.created_at TEXT IS 'Timestamp de creación del registro';
 LABEL ON COLUMN CNOFT.updated_at TEXT IS 'Timestamp de última actualización';
 
 -- Comment on Columns
-COMMENT ON COLUMN CNOFT.codigo_tabla IS 'Identificador único de la tabla de datos comunes';
-COMMENT ON COLUMN CNOFT.idioma IS 'Código del idioma para la tabla (ES, EN, etc)';
+COMMENT ON COLUMN CNOFT.codigo_tabla IS 'Identificador único de la tabla de datos comunes - Clave Primaria';
+COMMENT ON COLUMN CNOFT.idioma IS 'Código del idioma para la tabla (ES, EN, etc) - Clave Primaria';
 COMMENT ON COLUMN CNOFT.descripcion IS 'Descripción detallada de la tabla';
 COMMENT ON COLUMN CNOFT.valor_texto IS 'Valor de texto asociado a la tabla';
 COMMENT ON COLUMN CNOFT.valor_numerico IS 'Valor numérico asociado a la tabla';
@@ -81,8 +78,3 @@ COMMENT ON COLUMN CNOFT.observaciones IS 'Observaciones adicionales sobre el reg
 COMMENT ON COLUMN CNOFT.estado_registro IS 'Estado del registro (A=Activo, I=Inactivo)';
 COMMENT ON COLUMN CNOFT.created_at IS 'Timestamp de creación del registro';
 COMMENT ON COLUMN CNOFT.updated_at IS 'Timestamp de última actualización';
-
--- Create index for efficient queries
-CREATE INDEX IDX_CNOFT_CREATED_AT ON CNOFT (created_at);
-
-COMMIT;
