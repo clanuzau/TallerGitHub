@@ -39,6 +39,7 @@ For every source SQL (TXT) created must include:
 - LABEL ON COLUNM for every field definition
 - LABEL COLUMN TEXT for every field definition
 - COMMENT ON COLUMN for every field definition.
+- DO NOT ADD COMMIT instruction at the end.
 
 ## SQLRPGLE and RPGLE source creation
 For all sources SQLRPGLE or RPGLE, must include in the two first lines:
