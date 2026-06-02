@@ -34,6 +34,7 @@ All sources created, must be located on:
 For every source SQL (TXT) created: 
 - ADD RCDFMT keyword for every SQL created with an R followed by the name of the table and end with an ;
 - The structure to define LABEL ON COLUMN must be: LABEL ON COLUMN {FileName} and then define all the fields withou adding {FileName} at the begining of the field. Replace {FileName} with the name of the file being created.
+- ADD a SHORT description for every field. Description must not exceed 50 chars length.
 - LABEL COLUMN TEXT for every field definition. DO NOT ADD the table name, just the field name. Take as reference the same as "LABEL ON COLUMN" instruction.
 - ADD LABEL ON TABLE with the description of the table being created. DO NOT ADD the table name, just the field name.
 - NOT NULL WITH DEFAULT,
