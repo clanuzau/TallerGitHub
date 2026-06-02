@@ -32,12 +32,13 @@ All sources created, must be located on:
 
 ## SQL Source Creation (RUNSQLSTM)
 For every source SQL (TXT) created must include:
+- ADD RCDFMT keyword for every SQL created with an R followed by the name of the table and end with an ;
+- ADD LABEL ON TABLE with the description of the table being created.
 - DO NOT ADD THE TABLE NAME at the begining of the field for label instructions.
 - NOT NULL WITH DEFAULT,
-- LABEL COLUNM for every field definition
+- LABEL ON COLUNM for every field definition
 - LABEL COLUMN TEXT for every field definition
-- When Field Type is a ZONED, must be DECIMAL type in SQL
-- When Field Type is a PACKED, must be NUMERIC type in SQL
+- COMMENT ON COLUMN for every field definition.
 
 ## SQLRPGLE and RPGLE source creation
 For all sources SQLRPGLE or RPGLE, must include in the two first lines:
