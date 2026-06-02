@@ -32,6 +32,7 @@ All sources created, must be located on:
 
 ## SQL Source Creation (RUNSQLSTM)
 For every source SQL (TXT) created must include:
+- DO NOT ADD THE TABLE NAME at the begining of the field for label instructions.
 - NOT NULL WITH DEFAULT,
 - LABEL COLUNM for every field definition
 - LABEL COLUMN TEXT for every field definition
