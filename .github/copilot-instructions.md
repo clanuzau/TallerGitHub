@@ -33,7 +33,9 @@ All sources created, must be located on:
 ## SQL Source Creation (RUNSQLSTM)
 - File Location: All files created must be placed in C:\Users\clanuza\OneDrive - NOVACOMP\Documents\GitHub\TallerGitHub\Databases folder.
 - Plataform : SQL for DB2 for i. Follow standard nomenclature for these files on file creation.
-For every source SQL created: 
+For every source SQL created:
+- All descriptions must be in English, if the estructura_bd.md has spanish label or descriptios, trasnlate to English for SQL script.
+- IMPORTANT: Source has 80 position lenght. Consider this when add the lines for each sentence.
 - DO NOT DUPLICATE FIELD NAME WITH COLUMN NAME, example: if the field name is "ID", the column name must be different, for example "ID_FIELD".
 - ADD RCDFMT keyword for every SQL created with an R followed by the name of the table and end with an ;
 - The structure to define LABEL ON COLUMN must be: LABEL ON COLUMN {FileName} and then define all the fields withou adding {FileName} at the begining of the field. Replace {FileName} with the name of the file being created.
