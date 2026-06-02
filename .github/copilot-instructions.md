@@ -31,8 +31,9 @@ All sources created, must be located on:
 - **Program Name:** Place the current program/source name.
 
 ## SQL Source Creation (RUNSQLSTM)
+- File Location: All files created must be placed in C:\Users\clanuza\OneDrive - NOVACOMP\Documents\GitHub\TallerGitHub\Databases folder.
 - Plataform : SQL for DB2 for i. Follow standard nomenclature for these files on file creation.
-For every source SQL (TXT) created: 
+For every source SQL created: 
 - ADD RCDFMT keyword for every SQL created with an R followed by the name of the table and end with an ;
 - The structure to define LABEL ON COLUMN must be: LABEL ON COLUMN {FileName} and then define all the fields withou adding {FileName} at the begining of the field. Replace {FileName} with the name of the file being created.
 - ADD a SHORT description for every field. Description must not exceed 50 chars length.
@@ -40,7 +41,7 @@ For every source SQL (TXT) created:
 - ADD LABEL ON TABLE with the description of the table being created. DO NOT ADD the table name, just the field name.
 - NOT NULL WITH DEFAULT,
 - LABEL ON COLUNM for every field definition. DO NOT ADD the table name, just the field name.
-- COMMENT ON COLUMN for every field definition. DO NOT ADD the table name, just the field name.
+- COMMENT ON COLUMN for every field definition. DO NOT ADD the table name, just the field name. Description for each field, must not exceed 50 charaters length.
 - DO NOT ADD COMMIT instruction at the end of the file.
 
 ## SQLRPGLE and RPGLE source creation
