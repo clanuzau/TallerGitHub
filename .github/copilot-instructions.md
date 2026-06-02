@@ -31,6 +31,7 @@ All sources created, must be located on:
 - **Program Name:** Place the current program/source name.
 
 ## SQL Source Creation (RUNSQLSTM)
+- Plataform : SQL for DB2 for i. Follow standard nomenclature for these files on file creation.
 For every source SQL (TXT) created: 
 - ADD RCDFMT keyword for every SQL created with an R followed by the name of the table and end with an ;
 - The structure to define LABEL ON COLUMN must be: LABEL ON COLUMN {FileName} and then define all the fields withou adding {FileName} at the begining of the field. Replace {FileName} with the name of the file being created.
