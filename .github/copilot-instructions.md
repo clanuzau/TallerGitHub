@@ -36,6 +36,7 @@ All sources created, must be located on:
 For every source SQL created:
 - All descriptions must be in English, if the estructura_bd.md has spanish label or descriptios, trasnlate to English for SQL script.
 - IMPORTANT: Source has 80 position lenght. Consider this when add the lines for each sentence.
+- On PRIMARY KEY definition, use the suggested from estructura_bd.md 
 - DO NOT DUPLICATE FIELD NAME WITH COLUMN NAME, example: if the field name is "ID", the column name must be different, for example "ID_FIELD".
 - ADD RCDFMT keyword for every SQL created with an R followed by the name of the table and end with an ;
 - The structure to define LABEL ON COLUMN must be: LABEL ON COLUMN {FileName} and then define all the fields withou adding {FileName} at the begining of the field. Replace {FileName} with the name of the file being created.
