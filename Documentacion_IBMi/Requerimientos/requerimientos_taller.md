@@ -122,9 +122,9 @@ Para conciliación de cuentas contables, la salida debe incluir no solo balance 
     "fechaProceso": "2026-05-19",
     "fechaHoraInicio": "2026-05-19T12:00:00",
     "fechaHoraFin": "2026-05-19T12:03:42",
-    "usuario": "USRFIN01",
+    "usuario": "LANUZACX",
     "programa": "GLRPT001",
-    "libreria": "TALLERLIB",
+    "libreria": "LANUZACX2",
     "estadoEjecucion": "FINALIZADO"
   },
   "contexto": {
