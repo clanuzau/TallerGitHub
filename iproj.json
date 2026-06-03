@@ -1,3 +1,22 @@
 {
-  "description": "TallerGitHub"
+  "description": "TallerGitHub - conciliacion contable para IBM i y sistemas abiertos",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": "https://github.com/clanuzau/TallerGitHub.git",
+  "objlib": "LANUZACX2",
+  "curlib": "LANUZACX2",
+  "preUsrlibl": [
+    "LANUZACX2",
+    "QGPL",
+    "QTEMP",
+    "GAMES400"
+  ],
+  "postUsrlibl": [],
+  "includePath": [
+    "Databases",
+    "Documentacion_IBMi/Codigo_Ejemplos"
+  ],
+  "setIBMiEnvCmd": [
+    "CHGJOB CCSID(37)"
+  ]
 }
