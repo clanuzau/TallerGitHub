@@ -27,6 +27,7 @@ All sources created, must be located on:
 ## Usage Heading Coding Example for all type of source created.
 - **Author:** Cesar Lanuza
 - **Project:** GitHub Workshop for IBM i
+- **Team:** Novacomp
 - **Date:** Set to current date and local time in ISO format (YYYY-MM-DD) for both
 - **Program Name:** Place the current program/source name.
 

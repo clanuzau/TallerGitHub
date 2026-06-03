@@ -56,3 +56,8 @@ target/
 # OS / tooling
 *.bak
 *.orig
+
+.logs
+.evfevent
+.itest
+.env
