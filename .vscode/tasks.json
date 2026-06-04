@@ -22,6 +22,150 @@
         "panel": "dedicated",
         "clear": true
       }
+    },
+    {
+      "label": "TOBi: Build All (makei all)",
+      "type": "shell",
+      "command": "makei",
+      "args": [
+        "all"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true,
+        "showReuseMessage": false
+      },
+      "problemMatcher": [
+        "$ibmi"
+      ],
+      "detail": "Build all programs, modules, service programs, and database objects using TOBi (GNU Make)"
+    },
+    {
+      "label": "TOBi: Build Programs Only (makei pgms)",
+      "type": "shell",
+      "command": "makei",
+      "args": [
+        "pgms"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [
+        "$ibmi"
+      ],
+      "detail": "Build executable programs (GLBLN_RECON, JSON_OUTPUT, GLBLN_BATCH)"
+    },
+    {
+      "label": "TOBi: Build Libraries/Service Programs (makei libs)",
+      "type": "shell",
+      "command": "makei",
+      "args": [
+        "libs"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [
+        "$ibmi"
+      ],
+      "detail": "Build service programs and reusable library modules (NOVA.SRVPGM)"
+    },
+    {
+      "label": "TOBi: Build Database Objects (makei db)",
+      "type": "shell",
+      "command": "makei",
+      "args": [
+        "db"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [
+        "$ibmi"
+      ],
+      "detail": "Create SQL DDL objects (GLBLN, ACMST, CUMST tables)"
+    },
+    {
+      "label": "TOBi: Clean Objects",
+      "type": "shell",
+      "command": "makei",
+      "args": [
+        "clean"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Delete compiled objects from LANUZACX2 library (destructive operation)"
+    },
+    {
+      "label": "TOBi: Rebuild (Clean + Build All)",
+      "type": "shell",
+      "command": "makei",
+      "args": [
+        "rebuild"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [
+        "$ibmi"
+      ],
+      "detail": "Clean compiled objects, then rebuild everything from scratch"
+    },
+    {
+      "label": "TOBi: Show Build Configuration",
+      "type": "shell",
+      "command": "makei",
+      "args": [
+        "show-config"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Display current TOBi build configuration and compiler options"
+    },
+    {
+      "label": "PUB400: Deploy Rules.mk",
+      "type": "shell",
+      "command": "scp",
+      "args": [
+        "-P",
+        "2222",
+        "${workspaceFolder}/Rules.mk",
+        "LANUZACX@pub400.com:/home/LANUZACX/NovaSorc/Rules.mk"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Upload the local Rules.mk file to /home/LANUZACX/NovaSorc on PUB400. This prompts for the PUB400 password if SSH keys are not configured."
     }
   ]
 }

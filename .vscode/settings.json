@@ -1,0 +1,6 @@
+{
+  "terminal.integrated.env.windows": {
+    "PATH": "C:\\Users\\clanuza\\AppData\\Local\\Programs\\Python\\Python312;C:\\Users\\clanuza\\AppData\\Local\\Programs\\Python\\Python312\\Scripts;C:\\Users\\clanuza\\.local\\bin;${env:PATH}"
+  },
+  "python.defaultInterpreterPath": "C:\\Users\\clanuza\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+}
