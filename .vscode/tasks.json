@@ -148,6 +148,24 @@
       },
       "problemMatcher": [],
       "detail": "Display current TOBi build configuration and compiler options"
+    },
+    {
+      "label": "PUB400: Deploy Rules.mk",
+      "type": "shell",
+      "command": "scp",
+      "args": [
+        "-P",
+        "2222",
+        "${workspaceFolder}/Rules.mk",
+        "LANUZACX@pub400.com:/home/LANUZACX/NovaSorc/Rules.mk"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Upload the local Rules.mk file to /home/LANUZACX/NovaSorc on PUB400. This prompts for the PUB400 password if SSH keys are not configured."
     }
   ]
 }

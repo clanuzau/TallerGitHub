@@ -24,23 +24,23 @@ BNDDIR = NOVABND
 # Source File Definitions - SQL DDL Scripts
 # ============================================================================
 # SQL table creation scripts (IFS-based)
-src/databases/GLBLN.SQL: ;
-src/databases/ACMST.SQL: ;
-src/databases/CUMST.SQL: ;
+GLBLN.FILE: Databases/GLBLN.SQL
+ACMST.FILE: Databases/ACMST.SQL
+CUMST.FILE: Databases/CUMST.SQL
 
 # ============================================================================
 # SQL DDL Build Rules
 # ============================================================================
-# Pattern rule for SQL DDL objects
-%.sql: %.SQL
-	RUNSQLSTM SRCFILE('$(CURLIB)/QSQLSRC') SRCMBR($*) COMMIT(*NONE) NAMING(*SQL)
+# Pattern rule for SQL DDL stream files deployed in the Databases folder.
+%.FILE: Databases/%.SQL
+	RUNSQLSTM SRCSTMF('$(CURDIR)/Databases/$*.SQL') COMMIT(*NONE) NAMING(*SQL)
 
 # ============================================================================
 # SQLRPGLE Program Build Rules
 # ============================================================================
-# Pattern rule for SQLRPGLE modules (.SQLRPGLE sources)
-%.SQLRPGLE:
-	CRTSQLRPGI OBJ($*) SRCFILE('$(CURLIB)/NOVASORC') SRCMBR($*) \
+# Pattern rule for SQLRPGLE programs from IFS stream files.
+%.pgm: %.SQLRPGLE
+	CRTSQLRPGI OBJ($(CURLIB)/$*) SRCSTMF('$(CURDIR)/$<') \
 		$(SQLRPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)') ACTGRP('NOVA')
 
 # Specific program targets - Main reconciliation programs
@@ -55,9 +55,9 @@ JSON_OUTPUT.pgm: JSON_OUTPUT.SQLRPGLE
 # ============================================================================
 # RPGLE Module Build Rules (for service programs / library code)
 # ============================================================================
-# Pattern rule for RPGLE modules (.RPGLE sources)
-%.RPGLE_MODULE:
-	CRTRPGMOD MODULE($*) SRCFILE('$(CURLIB)/NOVASORC') SRCMBR($*) \
+# Pattern rule for RPGLE modules from IFS stream files.
+%.module: %.RPGLE
+	CRTRPGMOD MODULE($(CURLIB)/$*) SRCSTMF('$(CURDIR)/$<') \
 		$(RPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)')
 
 # Example modules
@@ -106,7 +106,7 @@ pgms: GLBLN_RECON.pgm JSON_OUTPUT.pgm GLBLN_BATCH.pgm
 	@echo "Programs built"
 
 # Build just SQL DDL objects
-db: src/databases/GLBLN.SQL src/databases/ACMST.SQL src/databases/CUMST.SQL
+db: GLBLN.FILE ACMST.FILE CUMST.FILE
 	@echo "Database objects created"
 
 # Clean compiled objects (destructive)

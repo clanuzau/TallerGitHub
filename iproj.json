@@ -38,5 +38,6 @@
   "binderDirectory": "NOVABND",
   "activationGroup": "NOVA",
   "author": "Cesar Lanuza",
-  "team": "Novacomp"
+  "team": "Novacomp",
+  "buildObjectCommand": "makei b -t {object}"
 }
