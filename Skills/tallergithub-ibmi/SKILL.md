@@ -1,13 +1,11 @@
 ---
-name: skills
-description: "Compatibility workspace skill for the TallerGitHub repository when a user or IDE refers to the repository Skills folder. Use for the same IBM i TallerGitHub work as tallergithub-ibmi: SQLRPGLE/RPGLE modules, service programs, SQL table/view scripts, IFS JSON reconciliation output, PUB400 setup, TOBi/makei build configuration, and agent review reports based on Documentacion_IBMi/Requerimientos/requerimientos_taller.md and Reglas/Revision_IBMi.md."
+name: tallergithub-ibmi
+description: Build, modify, validate, or review IBM i deliverables for the TallerGitHub repository, including SQLRPGLE/RPGLE modules, service programs, SQL table/view scripts, IFS JSON reconciliation output, PUB400 setup, TOBi/makei build configuration, and agent review reports based on Documentacion_IBMi/Requerimientos/requerimientos_taller.md and Reglas/Revision_IBMi.md.
 ---
 
-# TallerGitHub Skills Compatibility
+# TallerGitHub IBM i
 
-Use this as a compatibility alias for the repository-local TallerGitHub IBM i skill.
-
-Prefer the canonical workspace skill `tallergithub-ibmi` when invoking skills directly. If an IDE or prompt refers to the repository `Skills` folder, apply these same rules.
+Use this skill for IBM i work in the TallerGitHub repository. Treat the repository documents as the source of truth and keep changes aligned with the workshop's reconciliation scope.
 
 ## Core Workflow
 
