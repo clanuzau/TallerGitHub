@@ -18,5 +18,25 @@
   ],
   "setIBMiEnvCmd": [
     "CHGJOB CCSID(37)"
-  ]
+  ],
+  "buildSystem": "tobi",
+  "buildSystemVersion": "3.3.0",
+  "buildCommand": "makei all",
+  "sourceFileExtensions": [
+    "sqlrpgle",
+    "rpgle",
+    "cle",
+    "sql",
+    "dspf",
+    "prtf"
+  ],
+  "compileOptions": {
+    "sqlrpgle": "OPTIMIZE(*FULL) DATFMT(*ISO) TIMFMT(*ISO) TOSRC(*YES) DBGVIEW(*SOURCE)",
+    "rpgle": "OPTIMIZE(*FULL) DATFMT(*ISO) TIMFMT(*ISO) DBGVIEW(*SOURCE)",
+    "clle": "OPTION(*EVENTF) DBGVIEW(*SOURCE)"
+  },
+  "binderDirectory": "NOVABND",
+  "activationGroup": "NOVA",
+  "author": "Cesar Lanuza",
+  "team": "Novacomp"
 }
