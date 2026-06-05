@@ -38,7 +38,7 @@ APCLS.FILE: Databases/APCLS.SQL
 # ============================================================================
 # Pattern rule for SQL DDL stream files deployed in the Databases folder.
 %.FILE: Databases/%.SQL
-	RUNSQLSTM SRCSTMF('$(CURDIR)/Databases/$*.SQL') COMMIT(*NONE) NAMING(*SQL)
+	RUNSQLSTM SRCSTMF('$(CURDIR)/Databases/$*.SQL') COMMIT(*NONE) NAMING(*SYS)
 
 # ============================================================================
 # SQLRPGLE Program Build Rules
