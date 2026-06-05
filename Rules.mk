@@ -27,6 +27,11 @@ BNDDIR = NOVABND
 GLBLN.FILE: Databases/GLBLN.SQL
 ACMST.FILE: Databases/ACMST.SQL
 CUMST.FILE: Databases/CUMST.SQL
+GLMST.FILE: Databases/GLMST.SQL
+TRANS.FILE: Databases/TRANS.SQL
+TTRAN.FILE: Databases/TTRAN.SQL
+TRDSC.FILE: Databases/TRDSC.SQL
+APCLS.FILE: Databases/APCLS.SQL
 
 # ============================================================================
 # SQL DDL Build Rules
@@ -45,11 +50,11 @@ CUMST.FILE: Databases/CUMST.SQL
 
 # Specific program targets - Main reconciliation programs
 GLBLN_RECON.pgm: GLBLN_RECON.SQLRPGLE
-	CRTSQLRPGI OBJ(GLBLN_RECON) SRCFILE('$(CURLIB)/NOVASORC') SRCMBR(GLBLN_RECON) \
+	CRTSQLRPGI OBJ($(CURLIB)/GLBLN_RECON) SRCSTMF('$(CURDIR)/GLBLN_RECON.SQLRPGLE') \
 		$(SQLRPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)') ACTGRP('NOVA')
 
 JSON_OUTPUT.pgm: JSON_OUTPUT.SQLRPGLE
-	CRTSQLRPGI OBJ(JSON_OUTPUT) SRCFILE('$(CURLIB)/NOVASORC') SRCMBR(JSON_OUTPUT) \
+	CRTSQLRPGI OBJ($(CURLIB)/JSON_OUTPUT) SRCSTMF('$(CURDIR)/JSON_OUTPUT.SQLRPGLE') \
 		$(SQLRPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)') ACTGRP('NOVA')
 
 # ============================================================================
@@ -62,11 +67,11 @@ JSON_OUTPUT.pgm: JSON_OUTPUT.SQLRPGLE
 
 # Example modules
 GLBLN_DATA.module: GLBLN_DATA.RPGLE
-	CRTRPGMOD MODULE(GLBLN_DATA) SRCFILE('$(CURLIB)/NOVASORC') SRCMBR(GLBLN_DATA) \
+	CRTRPGMOD MODULE($(CURLIB)/GLBLN_DATA) SRCSTMF('$(CURDIR)/GLBLN_DATA.RPGLE') \
 		$(RPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)')
 
 JSON_UTILS.module: JSON_UTILS.RPGLE
-	CRTRPGMOD MODULE(JSON_UTILS) SRCFILE('$(CURLIB)/NOVASORC') SRCMBR(JSON_UTILS) \
+	CRTRPGMOD MODULE($(CURLIB)/JSON_UTILS) SRCSTMF('$(CURDIR)/JSON_UTILS.RPGLE') \
 		$(RPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)')
 
 # ============================================================================
@@ -74,7 +79,7 @@ JSON_UTILS.module: JSON_UTILS.RPGLE
 # ============================================================================
 # Build NOVA service program from modules
 NOVA.srvpgm: GLBLN_DATA.module JSON_UTILS.module
-	CRTSRVPGM SRVPGM(NOVA) MODULE(GLBLN_DATA JSON_UTILS) \
+	CRTSRVPGM SRVPGM($(CURLIB)/NOVA) MODULE($(CURLIB)/GLBLN_DATA $(CURLIB)/JSON_UTILS) \
 		EXPORT(*ALL) BNDDIR('$(BNDDIR)') ACTGRP(*CALLER) TGTRLS(*CURRENT)
 
 # ============================================================================
@@ -82,19 +87,19 @@ NOVA.srvpgm: GLBLN_DATA.module JSON_UTILS.module
 # ============================================================================
 # Pattern rule for CLLE programs (.CL sources)
 %.clle: %.CLE
-	CRTCLPGM PGM($*) SRCFILE('$(CURLIB)/NOVASORC') SRCMBR($*) \
+	CRTBNDCL PGM($(CURLIB)/$*) SRCSTMF('$(CURDIR)/$<') \
 		$(CLLEC_OPTS) TGTRLS(*CURRENT)
 
 # Orchestration program
 GLBLN_BATCH.pgm: GLBLN_BATCH.CLE GLBLN_RECON.pgm JSON_OUTPUT.pgm
-	CRTCLPGM PGM(GLBLN_BATCH) SRCFILE('$(CURLIB)/NOVASORC') SRCMBR(GLBLN_BATCH) \
+	CRTBNDCL PGM($(CURLIB)/GLBLN_BATCH) SRCSTMF('$(CURDIR)/GLBLN_BATCH.CLE') \
 		$(CLLEC_OPTS) TGTRLS(*CURRENT)
 
 # ============================================================================
 # Composite Targets
 # ============================================================================
 # Build all main components
-all: GLBLN_RECON.pgm JSON_OUTPUT.pgm NOVA.srvpgm GLBLN_BATCH.pgm
+all: db GLBLN_RECON.pgm JSON_OUTPUT.pgm NOVA.srvpgm GLBLN_BATCH.pgm
 	@echo "TOBi build complete: TallerGitHub reconciliation system built successfully"
 
 # Build just modules and service program (library code)
@@ -106,7 +111,7 @@ pgms: GLBLN_RECON.pgm JSON_OUTPUT.pgm GLBLN_BATCH.pgm
 	@echo "Programs built"
 
 # Build just SQL DDL objects
-db: GLBLN.FILE ACMST.FILE CUMST.FILE
+db: GLBLN.FILE ACMST.FILE CUMST.FILE GLMST.FILE TRANS.FILE TTRAN.FILE TRDSC.FILE APCLS.FILE
 	@echo "Database objects created"
 
 # Clean compiled objects (destructive)
