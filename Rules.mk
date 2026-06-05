@@ -85,14 +85,14 @@ NOVA.srvpgm: GLBLN_DATA.module JSON_UTILS.module
 # ============================================================================
 # CLLE Program Build Rules (Batch/Orchestration programs)
 # ============================================================================
-# Pattern rule for CLLE programs (.CL sources)
-%.clle: %.CLE
+# Pattern rule for CLLE programs from IFS stream files.
+%.pgm: %.CLLE
 	CRTBNDCL PGM($(CURLIB)/$*) SRCSTMF('$(CURDIR)/$<') \
 		$(CLLEC_OPTS) TGTRLS(*CURRENT)
 
 # Orchestration program
-GLBLN_BATCH.pgm: GLBLN_BATCH.CLE GLBLN_RECON.pgm JSON_OUTPUT.pgm
-	CRTBNDCL PGM($(CURLIB)/GLBLN_BATCH) SRCSTMF('$(CURDIR)/GLBLN_BATCH.CLE') \
+GLBLN_BATCH.pgm: GLBLN_BATCH.CLLE GLBLN_RECON.pgm JSON_OUTPUT.pgm
+	CRTBNDCL PGM($(CURLIB)/GLBLN_BATCH) SRCSTMF('$(CURDIR)/GLBLN_BATCH.CLLE') \
 		$(CLLEC_OPTS) TGTRLS(*CURRENT)
 
 # ============================================================================

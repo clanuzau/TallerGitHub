@@ -46,7 +46,7 @@ Act as an expert senior IBM i developer for the TallerGitHub reconciliation proj
 - Start every substantial task by mapping requested work to RF/RNF/checklist sections in `requerimientos_taller.md`.
 - Convert gaps into concrete actions: files to change, tests/evidence to produce, and PUB400 commands or VS Code settings to verify.
 - Do not modify live PUB400 objects blindly. When remote state matters, identify the exact command/task to run and inspect the result before changing configuration.
-- Treat `/home/LANUZACX/NovaSorc` as the current repository-configured IFS source path unless the user explicitly confirms a different path such as `/home/LANUZACX/NosaSorc`.
+- Treat `/home/LANUZACX/NovaSorc` as the confirmed PUB400 IFS source path for this repository.
 - Keep changes aligned with TOBi/makei and Code for IBM i. Update `Rules.mk`, `iproj.json`, `.vscode/tasks.json`, and `.vscode/actions.json` together when build behavior changes.
 
 ## SQL DDL Rules

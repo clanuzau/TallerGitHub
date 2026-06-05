@@ -35,7 +35,7 @@ REQUIRED_SOURCES = [
     "JSON_OUTPUT.SQLRPGLE",
     "GLBLN_DATA.RPGLE",
     "JSON_UTILS.RPGLE",
-    "GLBLN_BATCH.CLE",
+    "GLBLN_BATCH.CLLE",
 ]
 
 SQL_REQUIRED_PATTERNS = {
@@ -139,7 +139,9 @@ def audit_build_config(root: Path, findings: list[Finding]) -> None:
         if "makei" not in text:
             findings.append(Finding("High", "vscode-makei", ".vscode/tasks.json", "No makei task found."))
         if "/home/LANUZACX/NovaSorc" not in text:
-            findings.append(Finding("Medium", "vscode-ifs-path", ".vscode/tasks.json", "Configured PUB400 deploy path /home/LANUZACX/NovaSorc not found. Confirm intended IFS path."))
+            findings.append(Finding("High", "vscode-ifs-path", ".vscode/tasks.json", "Confirmed PUB400 deploy path /home/LANUZACX/NovaSorc not found."))
+        if "NosaSorc" in text:
+            findings.append(Finding("High", "vscode-ifs-path-typo", ".vscode/tasks.json", "Found incorrect IFS path typo NosaSorc. Use /home/LANUZACX/NovaSorc."))
 
     rules = root / "Rules.mk"
     if rules.exists():
