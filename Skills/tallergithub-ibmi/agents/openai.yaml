@@ -1,0 +1,4 @@
+interface:
+  display_name: "TallerGitHub IBM i Agent"
+  short_description: "Senior IBM i agent for TallerGitHub"
+  default_prompt: "Use $tallergithub-ibmi to analyze the TallerGitHub IBM i requirements, update the implementation, and produce a compliance review."

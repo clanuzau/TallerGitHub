@@ -1,11 +1,11 @@
 ---
 name: tallergithub-ibmi
-description: Build, modify, validate, or review IBM i deliverables for the TallerGitHub repository, including SQLRPGLE/RPGLE modules, service programs, SQL table/view scripts, IFS JSON reconciliation output, PUB400 setup, TOBi/makei build configuration, and agent review reports based on Documentacion_IBMi/Requerimientos/requerimientos_taller.md and Reglas/Revision_IBMi.md.
+description: Expert senior IBM i development agent for the TallerGitHub repository. Use when Codex needs to analyze Documentacion_IBMi/Requerimientos/requerimientos_taller.md, apply Reglas/Revision_IBMi.md, design or modify SQLRPGLE/RPGLE/CLLE modules, service programs, SQL table/view scripts, JSON generation in IFS, TOBi/makei build configuration, PUB400 VS Code environment settings, or produce agent review reports with IBM i/RPG/JSON references.
 ---
 
 # TallerGitHub IBM i
 
-Use this skill for IBM i work in the TallerGitHub repository. Treat the repository documents as the source of truth and keep changes aligned with the workshop's reconciliation scope.
+Act as an expert senior IBM i developer for the TallerGitHub reconciliation project. Treat repository requirements and review rules as binding source of truth, then use IBM i RPG/ILE/JSON references to choose implementation details.
 
 ## Core Workflow
 
@@ -15,6 +15,8 @@ Use this skill for IBM i work in the TallerGitHub repository. Treat the reposito
    - `Documentacion_IBMi/Base_Datos/estructura_bd.md`
    - `Databases/GLBLN.SQL` when GLBLN fields or SQL scripts are involved
    - `.vscode/actions.json`, `.vscode/tasks.json`, `iproj.json`, and `Rules.mk` when PUB400, TOBi/makei, compile actions, or environment setup are involved
+   - `Documentacion_IBMi/ILE Reference Guide.pdf` and `Documentacion_IBMi/Working with JSON in RPG.pdf` when RPG, ILE, DATA-GEN, DATA-INTO, JSON, or IFS implementation choices are involved
+   - `references/ibmi-reference-map.md` when official IBM links or local reference locations are needed
 2. Preserve the IBM i architecture:
    - Main SQLRPGLE program orchestrates the process.
    - Data access is separated from business rules.
@@ -22,7 +24,8 @@ Use this skill for IBM i work in the TallerGitHub repository. Treat the reposito
    - Reusable utilities belong in modules or service programs.
 3. Keep all outputs traceable by execution id, timestamp, program, library, user, and IFS path.
 4. Validate JSON output against the reconciliation contract documented in `Documentacion_IBMi/Requerimientos/requerimientos_taller.md`.
-5. When reviewing, lead with findings ordered by severity and cite files or sections as evidence.
+5. Run `python .codex/skills/tallergithub-ibmi/scripts/audit_tallergithub_ibmi.py .` after relevant changes, or before a review report.
+6. When reviewing, lead with findings ordered by severity and cite files or sections as evidence.
 
 ## Implementation Guidance
 
@@ -34,6 +37,17 @@ Use this skill for IBM i work in the TallerGitHub repository. Treat the reposito
 - Mark `excedeTolerancia` and `requiereRevision` explicitly.
 - Set execution status to `PARCIAL` or `ERROR` when high-severity incidents require it.
 - Keep PUB400 constraints in mind: personal library, SQL tables/views only, no DDS PF/LF objects.
+- Prefer embedded SQL JSON functions such as `JSON_OBJECT` and `JSON_ARRAYAGG` when the payload is naturally SQL-driven; prefer RPG `DATA-GEN` with a JSON generator when serializing structured RPG data or writing directly to IFS is cleaner.
+- For IFS writes, validate UTF-8 output, path authority, file naming by execution id/timestamp, and error handling around open/write/close operations.
+- Use `DFTACTGRP(*NO)`, named activation group `NOVA`, binder directory `NOVABND`, and service program contracts for reusable RPG procedures.
+
+## Agent Operating Rules
+
+- Start every substantial task by mapping requested work to RF/RNF/checklist sections in `requerimientos_taller.md`.
+- Convert gaps into concrete actions: files to change, tests/evidence to produce, and PUB400 commands or VS Code settings to verify.
+- Do not modify live PUB400 objects blindly. When remote state matters, identify the exact command/task to run and inspect the result before changing configuration.
+- Treat `/home/LANUZACX/NovaSorc` as the confirmed PUB400 IFS source path for this repository.
+- Keep changes aligned with TOBi/makei and Code for IBM i. Update `Rules.mk`, `iproj.json`, `.vscode/tasks.json`, and `.vscode/actions.json` together when build behavior changes.
 
 ## SQL DDL Rules
 
@@ -62,3 +76,11 @@ Decision rules:
 - `Aprobado`: no Critical/High findings and test evidence exists.
 - `Aprobado con observaciones`: only Medium/Low findings with a correction plan.
 - `Rechazado`: any Critical finding, any High finding that blocks compliance, or missing minimum test evidence.
+
+## Deliverable Checklist
+
+- Program architecture exists and is documented: main SQLRPGLE orchestrator, data module, rules module, JSON/IFS output module, utilities service program, batch entry point.
+- JSON contract contains required top-level sections, all required reconciliation fields, control totals, incident propagation, and UTF-8 validation evidence.
+- Build recipes compile every source object and database object needed by the project.
+- PUB400 setup covers library `LANUZACX2`, source file `NOVASORC`, binder directory `NOVABND`, target IFS path, and deploy/build tasks.
+- Review report applies `Reglas/Revision_IBMi.md` and includes severity, evidence, impact, recommendation, and final decision.

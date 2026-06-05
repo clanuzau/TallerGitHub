@@ -166,6 +166,73 @@
       },
       "problemMatcher": [],
       "detail": "Upload the local Rules.mk file to /home/LANUZACX/NovaSorc on PUB400. This prompts for the PUB400 password if SSH keys are not configured."
+    },
+    {
+      "label": "PUB400: Prepare NovaSorc IFS Directory",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "-p",
+        "2222",
+        "LANUZACX@pub400.com",
+        "mkdir -p /home/LANUZACX/NovaSorc"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Create or verify the confirmed PUB400 IFS source directory /home/LANUZACX/NovaSorc."
+    },
+    {
+      "label": "PUB400: Deploy IBM i Sources",
+      "type": "shell",
+      "command": "scp",
+      "args": [
+        "-P",
+        "2222",
+        "${workspaceFolder}/Rules.mk",
+        "${workspaceFolder}/GLBLN_RECON.SQLRPGLE",
+        "${workspaceFolder}/JSON_OUTPUT.SQLRPGLE",
+        "${workspaceFolder}/GLBLN_DATA.RPGLE",
+        "${workspaceFolder}/JSON_UTILS.RPGLE",
+        "${workspaceFolder}/GLBLN_BATCH.CLLE",
+        "LANUZACX@pub400.com:/home/LANUZACX/NovaSorc/"
+      ],
+      "dependsOn": [
+        "PUB400: Prepare NovaSorc IFS Directory"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Upload Rules.mk and IBM i source stream files to /home/LANUZACX/NovaSorc on PUB400."
+    },
+    {
+      "label": "PUB400: Build Remote (makei all)",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "-p",
+        "2222",
+        "LANUZACX@pub400.com",
+        "cd /home/LANUZACX/NovaSorc && makei all"
+      ],
+      "dependsOn": [
+        "PUB400: Deploy IBM i Sources"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": [
+        "$ibmi"
+      ],
+      "detail": "Deploy the local IBM i sources and run makei all in /home/LANUZACX/NovaSorc on PUB400."
     }
   ]
 }
