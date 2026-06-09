@@ -166,6 +166,12 @@ def audit_build_config(root: Path, findings: list[Finding]) -> None:
         raw_cl = re.search(r"^\t(RUNSQLSTM|CRTSQLRPGI|CRTRPGMOD|CRTSRVPGM|CRTBNDCL)\b", text, re.I | re.M)
         if raw_cl:
             findings.append(Finding("High", "rules-raw-cl-command", "Rules.mk", "Rules.mk recipes run under PASE shell; wrap IBM i CL commands with system \"...\"."))
+        if "RUNSQLSTM" in text and "DFTRDBCOL($(TARGET_LIB))" not in text:
+            findings.append(Finding("High", "rules-sql-library", "Rules.mk", "RUNSQLSTM must specify DFTRDBCOL($(TARGET_LIB)) so SQL DDL objects are created in LANUZACX2 even when CURLIB is blank."))
+        if "TARGET_LIB := $(if $(strip $(CURLIB)),$(CURLIB),LANUZACX2)" not in text:
+            findings.append(Finding("High", "rules-target-lib-default", "Rules.mk", "Rules.mk should define TARGET_LIB with a fallback for blank CURLIB during Project Explorer object builds."))
+        if "$(CURLIB)/" in text or "DFTRDBCOL($(CURLIB))" in text:
+            findings.append(Finding("High", "rules-curlib-direct", "Rules.mk", "Use $(TARGET_LIB), not $(CURLIB), in build recipes because Project Explorer can pass CURLIB as blank."))
         if "SRCSTMF" not in text:
             findings.append(Finding("High", "rules-stream-files", "Rules.mk", "Build rules should compile from stream files with SRCSTMF."))
 

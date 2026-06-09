@@ -20,6 +20,11 @@ CLLEC_OPTS = OPTION(*EVENTF) DBGVIEW(*SOURCE)
 # Binder directory
 BNDDIR = NOVABND
 
+# Project libraries. TOBi can define CURLIB as an empty value during
+# Project Explorer object builds, so use a derived fallback for recipes.
+TARGET_LIB := $(if $(strip $(CURLIB)),$(CURLIB),LANUZACX2)
+TARGET_OBJLIB := $(if $(strip $(OBJLIB)),$(OBJLIB),LANUZACX2)
+
 # ============================================================================
 # Source File Definitions - SQL DDL Scripts
 # ============================================================================
@@ -39,7 +44,7 @@ APCLS.FILE: Databases/APCLS.SQL
 # Pattern rule for SQL DDL stream files deployed in the Databases folder.
 %.FILE: Databases/%.SQL
 	mkdir -p "$(CURDIR)/.evfevent"
-	system "RUNSQLSTM SRCSTMF('$(CURDIR)/Databases/$*.SQL') COMMIT(*NONE) NAMING(*SYS)"
+	system "RUNSQLSTM SRCSTMF('$(CURDIR)/Databases/$*.SQL') COMMIT(*NONE) NAMING(*SYS) DFTRDBCOL($(TARGET_LIB))"
 
 # ============================================================================
 # SQLRPGLE Program Build Rules
@@ -47,16 +52,16 @@ APCLS.FILE: Databases/APCLS.SQL
 # Pattern rule for SQLRPGLE programs from IFS stream files.
 %.PGM: %.SQLRPGLE
 	mkdir -p "$(CURDIR)/.evfevent"
-	system "CRTSQLRPGI OBJ($(CURLIB)/$*) SRCSTMF('$(CURDIR)/$<') $(SQLRPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)') ACTGRP('NOVA')"
+	system "CRTSQLRPGI OBJ($(TARGET_LIB)/$*) SRCSTMF('$(CURDIR)/$<') $(SQLRPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)') ACTGRP('NOVA')"
 
 # Specific program targets - Main reconciliation programs
 GLBLN_RECON.PGM: GLBLN_RECON.SQLRPGLE
 	mkdir -p "$(CURDIR)/.evfevent"
-	system "CRTSQLRPGI OBJ($(CURLIB)/GLBLN_RECON) SRCSTMF('$(CURDIR)/GLBLN_RECON.SQLRPGLE') $(SQLRPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)') ACTGRP('NOVA')"
+	system "CRTSQLRPGI OBJ($(TARGET_LIB)/GLBLN_RECON) SRCSTMF('$(CURDIR)/GLBLN_RECON.SQLRPGLE') $(SQLRPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)') ACTGRP('NOVA')"
 
 JSON_OUTPUT.PGM: JSON_OUTPUT.SQLRPGLE
 	mkdir -p "$(CURDIR)/.evfevent"
-	system "CRTSQLRPGI OBJ($(CURLIB)/JSON_OUTPUT) SRCSTMF('$(CURDIR)/JSON_OUTPUT.SQLRPGLE') $(SQLRPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)') ACTGRP('NOVA')"
+	system "CRTSQLRPGI OBJ($(TARGET_LIB)/JSON_OUTPUT) SRCSTMF('$(CURDIR)/JSON_OUTPUT.SQLRPGLE') $(SQLRPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)') ACTGRP('NOVA')"
 
 # ============================================================================
 # RPGLE Module Build Rules (for service programs / library code)
@@ -64,16 +69,16 @@ JSON_OUTPUT.PGM: JSON_OUTPUT.SQLRPGLE
 # Pattern rule for RPGLE modules from IFS stream files.
 %.MODULE: %.RPGLE
 	mkdir -p "$(CURDIR)/.evfevent"
-	system "CRTRPGMOD MODULE($(CURLIB)/$*) SRCSTMF('$(CURDIR)/$<') $(RPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)')"
+	system "CRTRPGMOD MODULE($(TARGET_LIB)/$*) SRCSTMF('$(CURDIR)/$<') $(RPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)')"
 
 # Example modules
 GLBLN_DATA.MODULE: GLBLN_DATA.RPGLE
 	mkdir -p "$(CURDIR)/.evfevent"
-	system "CRTRPGMOD MODULE($(CURLIB)/GLBLN_DATA) SRCSTMF('$(CURDIR)/GLBLN_DATA.RPGLE') $(RPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)')"
+	system "CRTRPGMOD MODULE($(TARGET_LIB)/GLBLN_DATA) SRCSTMF('$(CURDIR)/GLBLN_DATA.RPGLE') $(RPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)')"
 
 JSON_UTILS.MODULE: JSON_UTILS.RPGLE
 	mkdir -p "$(CURDIR)/.evfevent"
-	system "CRTRPGMOD MODULE($(CURLIB)/JSON_UTILS) SRCSTMF('$(CURDIR)/JSON_UTILS.RPGLE') $(RPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)')"
+	system "CRTRPGMOD MODULE($(TARGET_LIB)/JSON_UTILS) SRCSTMF('$(CURDIR)/JSON_UTILS.RPGLE') $(RPGLEC_OPTS) TGTRLS(*CURRENT) BNDDIR('$(BNDDIR)')"
 
 # ============================================================================
 # Service Program Build Rules (Binding modules together)
@@ -81,7 +86,7 @@ JSON_UTILS.MODULE: JSON_UTILS.RPGLE
 # Build NOVA service program from modules
 NOVA.SRVPGM: GLBLN_DATA.MODULE JSON_UTILS.MODULE
 	mkdir -p "$(CURDIR)/.evfevent"
-	system "CRTSRVPGM SRVPGM($(CURLIB)/NOVA) MODULE($(CURLIB)/GLBLN_DATA $(CURLIB)/JSON_UTILS) EXPORT(*ALL) BNDDIR('$(BNDDIR)') ACTGRP(*CALLER) TGTRLS(*CURRENT)"
+	system "CRTSRVPGM SRVPGM($(TARGET_LIB)/NOVA) MODULE($(TARGET_LIB)/GLBLN_DATA $(TARGET_LIB)/JSON_UTILS) EXPORT(*ALL) BNDDIR('$(BNDDIR)') ACTGRP(*CALLER) TGTRLS(*CURRENT)"
 
 # ============================================================================
 # CLLE Program Build Rules (Batch/Orchestration programs)
@@ -89,12 +94,12 @@ NOVA.SRVPGM: GLBLN_DATA.MODULE JSON_UTILS.MODULE
 # Pattern rule for CLLE programs from IFS stream files.
 %.PGM: %.CLLE
 	mkdir -p "$(CURDIR)/.evfevent"
-	system "CRTBNDCL PGM($(CURLIB)/$*) SRCSTMF('$(CURDIR)/$<') $(CLLEC_OPTS) TGTRLS(*CURRENT)"
+	system "CRTBNDCL PGM($(TARGET_LIB)/$*) SRCSTMF('$(CURDIR)/$<') $(CLLEC_OPTS) TGTRLS(*CURRENT)"
 
 # Orchestration program
 GLBLN_BATCH.PGM: GLBLN_BATCH.CLLE GLBLN_RECON.PGM JSON_OUTPUT.PGM
 	mkdir -p "$(CURDIR)/.evfevent"
-	system "CRTBNDCL PGM($(CURLIB)/GLBLN_BATCH) SRCSTMF('$(CURDIR)/GLBLN_BATCH.CLLE') $(CLLEC_OPTS) TGTRLS(*CURRENT)"
+	system "CRTBNDCL PGM($(TARGET_LIB)/GLBLN_BATCH) SRCSTMF('$(CURDIR)/GLBLN_BATCH.CLLE') $(CLLEC_OPTS) TGTRLS(*CURRENT)"
 
 # ============================================================================
 # TOBi object builds
