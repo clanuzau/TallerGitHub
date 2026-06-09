@@ -21,7 +21,7 @@
   ],
   "buildSystem": "tobi",
   "buildSystemVersion": "3.3.0",
-  "buildCommand": "makei all",
+  "buildCommand": "makei build",
   "sourceFileExtensions": [
     "sqlrpgle",
     "rpgle",
@@ -39,5 +39,6 @@
   "activationGroup": "NOVA",
   "author": "Cesar Lanuza",
   "team": "Novacomp",
-  "buildObjectCommand": "makei b -t {object}"
+  "buildObjectCommand": "makei b -t {object}",
+  "compileCommand": "makei compile -f {filename}"
 }

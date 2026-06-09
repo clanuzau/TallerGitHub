@@ -24,11 +24,11 @@
       }
     },
     {
-      "label": "TOBi: Build All (makei all)",
+      "label": "TOBi: Build All (makei build)",
       "type": "shell",
       "command": "makei",
       "args": [
-        "all"
+        "build"
       ],
       "group": {
         "kind": "build",
@@ -43,14 +43,16 @@
       "problemMatcher": [
         "$ibmi"
       ],
-      "detail": "Build all programs, modules, service programs, and database objects using TOBi (GNU Make)"
+      "detail": "Build all programs, modules, service programs, and database objects using TOBi"
     },
     {
-      "label": "TOBi: Build Programs Only (makei pgms)",
+      "label": "TOBi: Build Programs Only (GLBLN_BATCH.PGM)",
       "type": "shell",
       "command": "makei",
       "args": [
-        "pgms"
+        "b",
+        "-t",
+        "GLBLN_BATCH.PGM"
       ],
       "group": "build",
       "presentation": {
@@ -61,14 +63,16 @@
       "problemMatcher": [
         "$ibmi"
       ],
-      "detail": "Build executable programs (GLBLN_RECON, JSON_OUTPUT, GLBLN_BATCH)"
+      "detail": "Build GLBLN_BATCH.PGM and its program dependencies through TOBi"
     },
     {
-      "label": "TOBi: Build Libraries/Service Programs (makei libs)",
+      "label": "TOBi: Build Libraries/Service Programs (NOVA.SRVPGM)",
       "type": "shell",
       "command": "makei",
       "args": [
-        "libs"
+        "b",
+        "-t",
+        "NOVA.SRVPGM"
       ],
       "group": "build",
       "presentation": {
@@ -79,14 +83,16 @@
       "problemMatcher": [
         "$ibmi"
       ],
-      "detail": "Build service programs and reusable library modules (NOVA.SRVPGM)"
+      "detail": "Build service program NOVA.SRVPGM and its module dependencies through TOBi"
     },
     {
-      "label": "TOBi: Build Database Objects (makei db)",
+      "label": "TOBi: Build Database Objects (Databases)",
       "type": "shell",
       "command": "makei",
       "args": [
-        "db"
+        "b",
+        "-d",
+        "."
       ],
       "group": "build",
       "presentation": {
@@ -97,14 +103,14 @@
       "problemMatcher": [
         "$ibmi"
       ],
-      "detail": "Create SQL DDL objects (GLBLN, ACMST, CUMST tables)"
+      "detail": "Create SQL DDL objects and dependent project objects through TOBi"
     },
     {
-      "label": "TOBi: Clean Objects",
+      "label": "TOBi: Clean Objects (manual CL)",
       "type": "shell",
-      "command": "makei",
+      "command": "echo",
       "args": [
-        "clean"
+        "Run clean commands from Rules.mk history manually on PUB400 if needed: DLTOBJ GLBLN_RECON, JSON_OUTPUT, GLBLN_BATCH, NOVA."
       ],
       "group": "build",
       "presentation": {
@@ -113,14 +119,14 @@
         "clear": true
       },
       "problemMatcher": [],
-      "detail": "Delete compiled objects from LANUZACX2 library (destructive operation)"
+      "detail": "Placeholder reminder only; destructive cleanup should be run explicitly on PUB400."
     },
     {
-      "label": "TOBi: Rebuild (Clean + Build All)",
+      "label": "TOBi: Rebuild (makei build)",
       "type": "shell",
       "command": "makei",
       "args": [
-        "rebuild"
+        "build"
       ],
       "group": "build",
       "presentation": {
@@ -131,14 +137,14 @@
       "problemMatcher": [
         "$ibmi"
       ],
-      "detail": "Clean compiled objects, then rebuild everything from scratch"
+      "detail": "Run a full TOBi build. Destructive cleanup is no longer defined as a phony Rules.mk target."
     },
     {
       "label": "TOBi: Show Build Configuration",
       "type": "shell",
-      "command": "makei",
+      "command": "echo",
       "args": [
-        "show-config"
+        "Library: LANUZACX2; Binder Directory: NOVABND; IFS: /home/LANUZACX/NovaSorc; Build: makei build; Object build: makei b -t {object}"
       ],
       "group": "build",
       "presentation": {
@@ -147,7 +153,7 @@
         "clear": true
       },
       "problemMatcher": [],
-      "detail": "Display current TOBi build configuration and compiler options"
+      "detail": "Display the current TallerGitHub TOBi configuration."
     },
     {
       "label": "PUB400: Deploy Rules.mk",
@@ -156,6 +162,7 @@
       "args": [
         "-P",
         "2222",
+        "-r",
         "${workspaceFolder}/Rules.mk",
         "LANUZACX@pub400.com:/home/LANUZACX/NovaSorc/Rules.mk"
       ],
@@ -175,7 +182,7 @@
         "-p",
         "2222",
         "LANUZACX@pub400.com",
-        "mkdir -p /home/LANUZACX/NovaSorc"
+        "mkdir -p /home/LANUZACX/NovaSorc /home/LANUZACX/NovaSorc/.evfevent"
       ],
       "presentation": {
         "reveal": "always",
@@ -198,6 +205,7 @@
         "${workspaceFolder}/GLBLN_DATA.RPGLE",
         "${workspaceFolder}/JSON_UTILS.RPGLE",
         "${workspaceFolder}/GLBLN_BATCH.CLLE",
+        "${workspaceFolder}/Databases",
         "LANUZACX@pub400.com:/home/LANUZACX/NovaSorc/"
       ],
       "dependsOn": [
@@ -212,14 +220,14 @@
       "detail": "Upload Rules.mk and IBM i source stream files to /home/LANUZACX/NovaSorc on PUB400."
     },
     {
-      "label": "PUB400: Build Remote (makei all)",
+      "label": "PUB400: Build Remote (makei build)",
       "type": "shell",
       "command": "ssh",
       "args": [
         "-p",
         "2222",
         "LANUZACX@pub400.com",
-        "cd /home/LANUZACX/NovaSorc && makei all"
+        "cd /home/LANUZACX/NovaSorc && makei build"
       ],
       "dependsOn": [
         "PUB400: Deploy IBM i Sources"
@@ -232,7 +240,7 @@
       "problemMatcher": [
         "$ibmi"
       ],
-      "detail": "Deploy the local IBM i sources and run makei all in /home/LANUZACX/NovaSorc on PUB400."
+      "detail": "Deploy the local IBM i sources and run makei build in /home/LANUZACX/NovaSorc on PUB400."
     }
   ]
 }

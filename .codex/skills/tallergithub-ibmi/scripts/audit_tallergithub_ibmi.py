@@ -130,14 +130,20 @@ def audit_build_config(root: Path, findings: list[Finding]) -> None:
             findings.append(Finding("Medium", "iproj-library", "iproj.json", "Expected objlib/curlib LANUZACX2 for PUB400 setup."))
         if data.get("buildSystem") != "tobi":
             findings.append(Finding("Medium", "iproj-buildsystem", "iproj.json", "Expected buildSystem=tobi."))
+        if data.get("buildCommand") != "makei build":
+            findings.append(Finding("High", "iproj-build-command", "iproj.json", "Expected buildCommand makei build for Project Explorer/TOBi."))
         if data.get("buildObjectCommand") != "makei b -t {object}":
             findings.append(Finding("Medium", "iproj-object-build", "iproj.json", "Expected buildObjectCommand makei b -t {object}."))
+        if data.get("compileCommand") != "makei compile -f {filename}":
+            findings.append(Finding("Medium", "iproj-compile-command", "iproj.json", "Expected compileCommand makei compile -f {filename}."))
 
     tasks = root / ".vscode" / "tasks.json"
     if tasks.exists():
         text = read_text(tasks)
         if "makei" not in text:
             findings.append(Finding("High", "vscode-makei", ".vscode/tasks.json", "No makei task found."))
+        if "makei all" in text:
+            findings.append(Finding("High", "vscode-makei-all", ".vscode/tasks.json", "Use makei build instead of makei all for TOBi project builds."))
         if "/home/LANUZACX/NovaSorc" not in text:
             findings.append(Finding("High", "vscode-ifs-path", ".vscode/tasks.json", "Confirmed PUB400 deploy path /home/LANUZACX/NovaSorc not found."))
         if "NosaSorc" in text:
@@ -149,6 +155,17 @@ def audit_build_config(root: Path, findings: list[Finding]) -> None:
         for source in REQUIRED_SOURCES:
             if source not in text:
                 findings.append(Finding("High", "rules-source-target", "Rules.mk", f"Rules.mk does not reference required source {source}."))
+        for target in ["GLBLN_RECON.PGM", "JSON_OUTPUT.PGM", "GLBLN_BATCH.PGM", "GLBLN_DATA.MODULE", "JSON_UTILS.MODULE", "NOVA.SRVPGM"]:
+            if target not in text:
+                findings.append(Finding("High", "rules-object-target", "Rules.mk", f"Rules.mk does not define required TOBi object target {target}."))
+        for phony_target in ["all:", "libs:", "pgms:", "db:", "clean:", "rebuild:", "show-config:", ".PHONY"]:
+            if phony_target in text:
+                findings.append(Finding("High", "rules-phony-target", "Rules.mk", f"Rules.mk contains unsupported non-object target {phony_target}."))
+        if "QSH CMD(" in text:
+            findings.append(Finding("High", "rules-pase-shell", "Rules.mk", "Rules.mk recipes run under PASE shell; use shell commands such as mkdir directly, not QSH CMD(...)."))
+        raw_cl = re.search(r"^\t(RUNSQLSTM|CRTSQLRPGI|CRTRPGMOD|CRTSRVPGM|CRTBNDCL)\b", text, re.I | re.M)
+        if raw_cl:
+            findings.append(Finding("High", "rules-raw-cl-command", "Rules.mk", "Rules.mk recipes run under PASE shell; wrap IBM i CL commands with system \"...\"."))
         if "SRCSTMF" not in text:
             findings.append(Finding("High", "rules-stream-files", "Rules.mk", "Build rules should compile from stream files with SRCSTMF."))
 
