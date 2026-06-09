@@ -2,5 +2,18 @@
   "terminal.integrated.env.windows": {
     "PATH": "C:\\Users\\clanuza\\AppData\\Local\\Programs\\Python\\Python312;C:\\Users\\clanuza\\AppData\\Local\\Programs\\Python\\Python312\\Scripts;C:\\Users\\clanuza\\.local\\bin;${env:PATH}"
   },
-  "python.defaultInterpreterPath": "C:\\Users\\clanuza\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+  "python.defaultInterpreterPath": "C:\\Users\\clanuza\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "chat.mcp.serverSampling": {
+    "TallerGitHub/.vscode/mcp.json: io.github.github/github-mcp-server": {
+      "allowedModels": [
+        "copilot/auto",
+        "copilotcli/claude-haiku-4.5",
+        "copilot/claude-haiku-4.5",
+        "claude-code/claude-haiku-4.5",
+        "copilotcli/gpt-4.1",
+        "copilot/gpt-5-mini",
+        "copilotcli/gpt-5-mini"
+      ]
+    }
+  }
 }
