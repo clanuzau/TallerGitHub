@@ -12,6 +12,7 @@ Thumbs.db
 !.vscode/extensions.json
 !.vscode/launch.json
 !.vscode/tasks.json
+!.vscode/testing.json
 
 # Python
 __pycache__/

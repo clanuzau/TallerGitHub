@@ -1,0 +1,29 @@
+{
+  "rpgunit": {
+    "rucrtrpg": {
+      "text": "TallerGitHub RPGUnit stream-file tests",
+      "tgtCcsid": "*JOB",
+      "dbgView": "*SOURCE",
+      "rpgPpOpt": "*LVL2",
+      "cOption": [
+        "*EVENTF"
+      ],
+      "bndDir": [
+        "LANUZACX2/NOVABND"
+      ],
+      "actGrp": "NOVA"
+    },
+    "rucalltst": {
+      "order": "*API",
+      "libl": "*CURRENT",
+      "jobD": "*DFT",
+      "detail": "*BASIC",
+      "output": "*ALLWAYS",
+      "rclRsc": "*NO",
+      "onFailure": "*ABORT"
+    }
+  },
+  "codecov": {
+    "module": []
+  }
+}

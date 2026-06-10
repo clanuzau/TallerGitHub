@@ -149,6 +149,43 @@ def audit_build_config(root: Path, findings: list[Finding]) -> None:
         if "NosaSorc" in text:
             findings.append(Finding("High", "vscode-ifs-path-typo", ".vscode/tasks.json", "Found incorrect IFS path typo NosaSorc. Use /home/LANUZACX/NovaSorc."))
 
+    settings = root / ".vscode" / "settings.json"
+    if settings.exists():
+        try:
+            data = json.loads(read_text(settings))
+        except json.JSONDecodeError as exc:
+            findings.append(Finding("High", "vscode-settings-json", ".vscode/settings.json", f"Invalid JSON: {exc}."))
+            data = {}
+        if data.get("IBM i Testing.productLibrary") != "RPGUNIT":
+            findings.append(Finding("Medium", "testing-product-library", ".vscode/settings.json", "Expected IBM i Testing.productLibrary RPGUNIT."))
+        if data.get("IBM i Testing.testSourceFiles") != ["QTESTSRC"]:
+            findings.append(Finding("Medium", "testing-source-files", ".vscode/settings.json", "Expected IBM i Testing.testSourceFiles to be [QTESTSRC]."))
+        stub_preferences = data.get("IBM i Testing.testStubPreferences", {})
+        if stub_preferences.get("Test Source Directory") != "qtestsrc":
+            findings.append(Finding("Medium", "testing-stub-directory", ".vscode/settings.json", "Expected generated local tests under qtestsrc."))
+        if stub_preferences.get("Test Source File") != "QTESTSRC":
+            findings.append(Finding("Medium", "testing-stub-source-file", ".vscode/settings.json", "Expected generated member tests under QTESTSRC."))
+
+    for testing_config in [root / ".vscode" / "testing.json", root / "qtestsrc" / "testing.json"]:
+        path_label = rel(testing_config, root)
+        if not testing_config.exists():
+            findings.append(Finding("Medium", "testing-config-missing", path_label, "IBM i Testing RPGUnit configuration is missing."))
+            continue
+        try:
+            data = json.loads(read_text(testing_config))
+        except json.JSONDecodeError as exc:
+            findings.append(Finding("High", "testing-config-json", path_label, f"Invalid JSON: {exc}."))
+            continue
+        rpgunit = data.get("rpgunit", {})
+        rucrtrpg = rpgunit.get("rucrtrpg", {})
+        rucalltst = rpgunit.get("rucalltst", {})
+        if "LANUZACX2/NOVABND" not in rucrtrpg.get("bndDir", []):
+            findings.append(Finding("Medium", "testing-binder-directory", path_label, "RPGUnit test compile config should bind with LANUZACX2/NOVABND."))
+        if rucrtrpg.get("actGrp") != "NOVA":
+            findings.append(Finding("Medium", "testing-activation-group", path_label, "RPGUnit test compile config should use activation group NOVA."))
+        if rucalltst.get("libl") != "*CURRENT":
+            findings.append(Finding("Medium", "testing-run-library-list", path_label, "RPGUnit run config should use the current PUB400 library list."))
+
     rules = root / "Rules.mk"
     if rules.exists():
         text = read_text(rules)

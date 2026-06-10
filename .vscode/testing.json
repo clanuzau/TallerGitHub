@@ -1,0 +1,37 @@
+{
+  "rpgunit": {
+    "rucrtrpg": {
+      "text": "TallerGitHub RPGUnit tests",
+      "tgtCcsid": "*JOB",
+      "dbgView": "*SOURCE",
+      "rpgPpOpt": "*LVL2",
+      "cOption": [
+        "*EVENTF"
+      ],
+      "bndDir": [
+        "LANUZACX2/NOVABND"
+      ],
+      "actGrp": "NOVA"
+    },
+    "rucrtcbl": {
+      "text": "TallerGitHub COBOL unit tests",
+      "tgtCcsid": "*JOB",
+      "dbgView": "*SOURCE",
+      "cOption": [
+        "*EVENTF"
+      ]
+    },
+    "rucalltst": {
+      "order": "*API",
+      "libl": "*CURRENT",
+      "jobD": "*DFT",
+      "detail": "*BASIC",
+      "output": "*ALLWAYS",
+      "rclRsc": "*NO",
+      "onFailure": "*ABORT"
+    }
+  },
+  "codecov": {
+    "module": []
+  }
+}
