@@ -3,6 +3,8 @@
     "PATH": "C:\\Users\\clanuza\\AppData\\Local\\Programs\\Python\\Python312;C:\\Users\\clanuza\\AppData\\Local\\Programs\\Python\\Python312\\Scripts;C:\\Users\\clanuza\\.local\\bin;${env:PATH}"
   },
   "python.defaultInterpreterPath": "C:\\Users\\clanuza\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "IBM i Debug.updateProductionFiles": false,
+  "IBM i Debug.enableDebugTracing": false,
   "IBM i Testing.productLibrary": "RPGUNIT",
   "IBM i Testing.testSourceFiles": [
     "QTESTSRC"

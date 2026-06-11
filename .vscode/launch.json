@@ -1,0 +1,49 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "IBMiDebug",
+      "request": "launch",
+      "subType": "batch",
+      "name": "IBM i Debug: GLBLN_BATCH batch",
+      "useConnectionDetailsFromSettings": true,
+      "host": "pub400.com",
+      "port": 8005,
+      "secure": true,
+      "ignoreCertificateErrors": false,
+      "library": "LANUZACX2",
+      "program": "GLBLN_BATCH",
+      "startBatchJobCommand": "CALL PGM(LANUZACX2/GLBLN_BATCH)",
+      "updateProductionFiles": false
+    },
+    {
+      "type": "IBMiDebug",
+      "request": "launch",
+      "subType": "sep",
+      "action": "set",
+      "name": "IBM i Debug: SEP GLBLN_BATCH",
+      "useConnectionDetailsFromSettings": true,
+      "host": "pub400.com",
+      "port": 8005,
+      "secure": true,
+      "ignoreCertificateErrors": false,
+      "library": "LANUZACX2",
+      "program": "GLBLN_BATCH",
+      "programType": "*PGM",
+      "module": "GLBLN_BATCH",
+      "procedure": ""
+    },
+    {
+      "type": "IBMiDebug",
+      "request": "attach",
+      "name": "IBM i Debug: Attach to IBM i job",
+      "useConnectionDetailsFromSettings": true,
+      "host": "pub400.com",
+      "port": 8005,
+      "secure": true,
+      "ignoreCertificateErrors": false,
+      "jobId": "",
+      "allSessions": true
+    }
+  ]
+}
